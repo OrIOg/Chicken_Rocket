@@ -17,13 +17,14 @@ def get_sheet(size, nb, max_per_line, offset, *path):
 	# Renvoie des images decoupees.
 	return sprite_sheet
 
-
+# Recupere le dossier du script
 data_folder = os.path.join(os.getcwd(), 'data')
 
+# Assemble les chemins pour avoir le chemin absolue
 def get(*path):
 	return os.path.join(data_folder, *path)
 
-
+# Recupere un son et permet d'ajuster son volume
 def get_sound(volume, *path):
 	sound = mixer.Sound(get(*path))
 	sound.set_volume(volume)
@@ -35,21 +36,24 @@ Textures = dict()
 Fonts = dict()
 Sounds = dict()
 
-
+# Initialisation des ressources: images sons ...
 def init_ressources():
-	# Chargement des images, et conversion pour l'usage de pygame
+	# Conversion des images pour l'usage de pygame
+
+	# Decor / Ancien joueur & Ancinne balle
 	Textures['sky'] = image.load(get('sky.png')).convert()
 	Textures['sky2'] = image.load(get('sky_2.png')).convert()
 	Textures['ground'] = image.load(get('ground.png')).convert_alpha()
-#	Textures['explosion'] = image.load(get('explosion.png')).convert_alpha()
 	Textures['player'] = image.load(get('player.png')).convert_alpha()
 	Textures['bullet'] = image.load(get('bullet.png')).convert()
 	Textures['bullet'].set_colorkey((255,255,255))
 
+	# Menu
 	Textures['menu'] = image.load(get('back.png')).convert()
 	Textures['play'] = image.load(get('Play.png')).convert_alpha()
 	Textures['exit'] = image.load(get('Exit.png')).convert_alpha()
 
+	# Sprite/Animations Poule - Sovanarit
 	poule = get("poule.png")
 	Textures['poulet'] = [
 
@@ -81,6 +85,7 @@ def init_ressources():
         SpriteStripAnim(poule, (96,224,32,32), 1, (181,230,29), True),
 	]
 
+	# Sprite/Animations Missile - Sovanarit
 	missile = get("LargeMissiles.png")
 	Textures['missile'] = [
 
@@ -89,13 +94,12 @@ def init_ressources():
 
 	]
 
-	# Sprite-sheets
+	# Sprite-sheets Explosion
 	Textures['exp_sheet'] = get_sheet((64, 64), 16, 4, (0, 0), 'exp_sheet.png')
 
-	# Sounds
+	# Sounds de tire ancien
 	Sounds['bullet'] = get_sound(1.0, 'hi_hat.wav')
 
 
-	# Fonts
+	# Fonts - police d'ecriture
 	Fonts['default'] = font.SysFont('None', 16)
-

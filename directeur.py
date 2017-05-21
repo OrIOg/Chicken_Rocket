@@ -16,24 +16,27 @@ class Directeur(object):
 		# Charge les ressources
 		init_ressources()
 
+		# Est-ce que le jeu continue
 		self.running = True
+		# Creer le menu et le met comme menu
 		self.scene = Menu(self)
-
 		self.display_fps = Fonts['default']
-
 		self.game_loop()
 
 	def game_loop(self):
 		while self.running:
+			# Temps entre deux updates
 			delta_time = self.clock.tick() * 0.001
+			# Appelle les fonctions principales d'une scene
 			self.scene.event()
 			self.scene.update(delta_time)
 			self.scene.draw()
 			text = self.display_fps.render(str(self.clock.get_fps()), False, (0, 0, 0, 255))
-			#self.screen.blit(text, (0, 0))
+			# Affiche la nouvelle frame
 			pygame.display.update()
 
 
+# Affiche la nouvelle frame
 def main():
 	pygame.init()
 	pygame.display.init()
