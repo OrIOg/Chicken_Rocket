@@ -1,6 +1,7 @@
 import pygame
 from resources import get_sheet
 
+# Ce fichier n'est pas utilisé dans le jeu
 
 class AnimatedSprite(pygame.sprite.Sprite):
 	"""Extended sprite class to animate more easily"""
