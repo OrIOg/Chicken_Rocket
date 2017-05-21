@@ -28,6 +28,5 @@ class spritesheet(object):
     # Charge une bande d'image,
     def load_strip(self, rect, image_count, colorkey = None):
         # Recupere les Rects des images pour les passer dans images_at
-        tups = [(rect[0]+rect[2]*x, rect[1], rect[2], rect[3])
-                for x in range(image_count)]
+        tups = [(rect[0]+rect[2]*x, rect[1], rect[2], rect[3]) for x in range(image_count)]
         return self.images_at(tups, colorkey)
