@@ -1,4 +1,5 @@
 import os
+import random
 from pygame import image, font, mixer
 from spritestripanim import SpriteStripAnim
 
@@ -30,7 +31,14 @@ def get_sound(volume, *path):
 	sound.set_volume(volume)
 	return sound
 
+def GetMap():
+	nb = len(skys)
+	rnd = random.randrange(0, nb)
+	return (grounds[rnd].copy(), skys[rnd].copy())
 
+
+grounds = []
+skys = []
 
 Textures = dict()
 Fonts = dict()
@@ -41,16 +49,30 @@ def init_ressources():
 	# Conversion des images pour l'usage de pygame
 
 	# Decor / Ancien joueur & Ancinne balle
-	Textures['sky'] = image.load(get('sky.png')).convert()
-	Textures['sky2'] = image.load(get('sky_2.png')).convert()
-	Textures['ground'] = image.load(get('ground.png')).convert_alpha()
+	
+	global skys
+	global grounds
+	global data_folder
+	for i in os.listdir(data_folder):
+		if os.path.isfile(os.path.join(data_folder, i)) and 'sky' in i:
+			skys.append(image.load(get(i)).convert_alpha())
+	for i in os.listdir(data_folder):
+		if os.path.isfile(os.path.join(data_folder, i)) and 'ground' in i:
+			grounds.append(image.load(get(i)).convert_alpha())
+	#skys = [filename for filename in os.listdir(data_folder) if filename.startswith("sky")]
+	#grounds = [filename for filename in os.listdir(data_folder) if filename.startswith("ground")]
+
 	Textures['player'] = image.load(get('player.png')).convert_alpha()
 	Textures['bullet'] = image.load(get('bullet.png')).convert()
 	Textures['bullet'].set_colorkey((255,255,255))
+	Textures['select_icon'] = image.load(get('select_icon.png')).convert_alpha()
+	Textures['powerbar_back'] = image.load(get('power_bar_back.png')).convert_alpha()
+	Textures['powerbar'] = image.load(get('power_bar.png')).convert_alpha()
 
 	# Menu
 	Textures['menu'] = image.load(get('back.png')).convert()
 	Textures['play'] = image.load(get('Play.png')).convert_alpha()
+	Textures['replay'] = image.load(get('Replay.png')).convert_alpha()
 	Textures['exit'] = image.load(get('Exit.png')).convert_alpha()
 
 	# Sprite/Animations Poule - Sovanarit
@@ -103,3 +125,4 @@ def init_ressources():
 
 	# Fonts - police d'ecriture
 	Fonts['default'] = font.SysFont('None', 16)
+	Fonts['32'] = font.SysFont('None',64)

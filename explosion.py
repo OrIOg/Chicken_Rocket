@@ -27,15 +27,14 @@ class Explosion(pygame.sprite.Sprite):
 		for player in players:
 			length = ((player.real_pos[0]-self.rect.center[0])**2 + (player.real_pos[1]-self.rect.center[1])**2) ** 0.5
 			# Si elle est plus de 200 alors on applique les dommages au joueur
-			damage = (100-(length/2))
-			if damage > 0:
-				player.hit(damage)
+
+			dmg = self.rect.width - length
+			if dmg > 0:
+				player.hit(300-(length * 0.5))
 		# Ajout au groupe de la scene
 		scene.group_explosions.add(self)
-		# Le prochain joueur joue
-		scene.next_player()
 
-	# Mise a jour de l'aniation
+	# Mise a jour de l'animation
 	def update_phase(self):
 		# Si on doit faire la prochaine animation
 		if pygame.time.get_ticks() >= self.next_update:

@@ -50,6 +50,10 @@ class Player(pygame.sprite.Sprite):
 
 		scene.group_players.add(self)
 
+	def kill(self):
+		# self.scene.next_player()
+		super().kill()
+
 	# Touché !
 	def hit(self, damage):
 		self.life -= damage
@@ -59,12 +63,8 @@ class Player(pygame.sprite.Sprite):
 	# Gere la barre de puissance & l'affiche
 	def draw_powerbar(self):
 		if self.getting_power:
-			posx = pygame.display.get_surface().get_width()/2 - 100
-			posy = pygame.display.get_surface().get_height() - 50
-			pygame.draw.rect(self.scene.dir.screen, (0, 0, 255), (posx, posy, 200, 50))
 			self.X += 0.01
 			self.mult = abs(sin(self.X))
-			pygame.draw.rect(self.scene.dir.screen, (255, 0, 0), (posx, posy, self.mult * 200, 50))
 
 	# Action lorsque l'on lache le clique. Stop les joueurs. Creer une balle
 	def upaction(self):
@@ -79,7 +79,7 @@ class Player(pygame.sprite.Sprite):
 		if vect[0] is not 0:
 			angle = -atan2(vect[1], vect[0])
 
-		Bullet(self.scene, [self.rect.midtop[0],self.rect.midtop[1]-32], 2*self.mult, angle, [self.scene.group_players, self.scene.group_platforms])
+		Bullet(self.scene, [self.rect.midtop[0], self.rect.midtop[1]-32], 1.5*self.mult, angle, [self.scene.group_players, self.scene.group_platforms])
 		self.X = 0
 		self.mult = 0
 
@@ -93,14 +93,14 @@ class Player(pygame.sprite.Sprite):
 		# Si on ne tire pas...
 		if not self.getting_power:
 			keys = pygame.key.get_pressed()
+			if keys[pygame.K_SPACE] and self.grounded:
+				self.velocity[1] -= 5
 			if keys[pygame.K_a]:
 				self.movements[0] -= 150
 				self.key = 1
 			elif keys[pygame.K_d]:
 				self.movements[0] += 150
 				self.key = 2
-			elif keys[pygame.K_SPACE] and self.grounded:
-				self.velocity[1] -= 5
 			else:
 				self.animations[self.key].iter()
 			self.image = self.animations[self.key].next()
