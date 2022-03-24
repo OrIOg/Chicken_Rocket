@@ -72,7 +72,7 @@ def init_ressources():
 	# Menu
 	Textures['menu'] = image.load(get('back.png')).convert()
 	Textures['play'] = image.load(get('Play.png')).convert_alpha()
-	Textures['replay'] = image.load(get('Replay.png')).convert_alpha()
+	Textures['replay'] = image.load(get('replay.png')).convert_alpha()
 	Textures['exit'] = image.load(get('Exit.png')).convert_alpha()
 
 	# Sprite/Animations Poule - Sovanarit
